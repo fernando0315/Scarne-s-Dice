@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Player user;
     private Player computer;
+    private Random rand = new Random();
 
     private Button rollButton;
     private Button holdButton;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Random rand = new Random();
                 int diceValue = rand.nextInt(6) + 1;
 
                 switch(diceValue) {
@@ -55,9 +55,10 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 user.updateTurnScoreWithDiceValue(diceValue);
-                scoreTextView.setText("Your score:" + user.getOverallScore() +
-                        " computer score: " + computer.getOverallScore() +
-                        " your turn score: " + user.getTurnScore());
+                printScore("user");
+
+                if(diceValue == 1)
+                    computerTurn();
             }
         });
 
@@ -67,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 user.updateOverallScore();
                 user.setTurnScore(0);
-                scoreTextView.setText("Your score:" + user.getOverallScore() +
-                        " computer score: " + computer.getOverallScore() +
-                        " your turn score: " + user.getTurnScore());
+                printScore("user");
+                computerTurn();
             }
         });
 
@@ -81,10 +81,37 @@ public class MainActivity extends AppCompatActivity {
                 computer.setTurnScore(0);
                 user.setOverallScore(0);
                 user.setTurnScore(0);
+                printScore("user");
             }
         });
+
     }
 
+    private void computerTurn() {
+        rollButton.setEnabled(false);
+        holdButton.setEnabled(false);
 
+        int diceValue;
+        do{
+            diceValue = rand.nextInt(6) + 1;
+            computer.updateTurnScoreWithDiceValue(diceValue);
+            printScore("computer");
+        } while(computer.getTurnScore() < 20 && diceValue != 1);
+
+        computer.updateOverallScore();
+        printScore("user");
+
+
+        rollButton.setEnabled(true);
+        holdButton.setEnabled(true);
+    }
+
+    private void printScore(String turnId) {
+
+        scoreTextView.setText("Your score:" + user.getOverallScore() +
+                " computer score: " + computer.getOverallScore() +
+                " " + turnId + " turn score: " +
+                (turnId.equals("user") ? user.getTurnScore() : computer.getTurnScore()));
+    }
 
 }
