@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                user.updateScoreWithDiceValue(diceValue);
+                user.updateTurnScoreWithDiceValue(diceValue);
                 scoreTextView.setText("Your score:" + user.getOverallScore() +
                         " computer score: " + computer.getOverallScore() +
                         " your turn score: " + user.getTurnScore());
@@ -62,9 +62,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
         holdButton = (Button) findViewById(R.id.holdButton);
-
+        holdButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user.updateOverallScore();
+                user.setTurnScore(0);
+                scoreTextView.setText("Your score:" + user.getOverallScore() +
+                        " computer score: " + computer.getOverallScore() +
+                        " your turn score: " + user.getTurnScore());
+            }
+        });
 
         resetButton = (Button) findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                computer.setOverallScore(0);
+                computer.setTurnScore(0);
+                user.setOverallScore(0);
+                user.setTurnScore(0);
+            }
+        });
     }
 
 
