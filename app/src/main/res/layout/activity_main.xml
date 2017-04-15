@@ -9,37 +9,44 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <TextView
+            android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your score: 0 Computer Score: 0"/>
 
+
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:id="@+id/diceImage1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/dice1"/>
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/RollButton"
+                android:id="@+id/rollButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Roll"/>
 
             <Button
-                android:id="@+id/HoldButton"
+                android:id="@+id/holdButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hold"/>
 
             <Button
-                android:id="@+id/ResetButton"
+                android:id="@+id/resetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reset"/>

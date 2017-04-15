@@ -30,11 +30,15 @@ public class Player {
         this.turnScore = turnScore;
     }
 
-    public void updateScoreWithDiceValue(int diceVal) {
+    public void updateTurnScoreWithDiceValue(int diceVal) {
         if(diceVal != 1) {
             turnScore += diceVal;
         } else {
             turnScore = 0;
         }
+    }
+
+    public void updateOverallScore() {
+        overallScore += turnScore;
     }
 }

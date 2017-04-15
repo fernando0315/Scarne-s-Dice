@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         user = new Player(0, 0);
         computer = new Player(0, 0);
 
-        diceImage = (ImageView) findViewById(R.id.diceImage);
+        diceImage = (ImageView) findViewById(R.id.diceImage1);
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
 
         rollButton = (Button) findViewById(R.id.rollButton);
