@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Button rollButton;
     private Button holdButton;
     private Button resetButton;
-    private ImageView diceImage;
+    private ImageView diceImage1;
+    private ImageView diceImage2;
     private TextView scoreTextView;
 
     Handler timerHandler = new Handler();
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            if(computerTurn() != 1 && computer.getTurnScore() < 20)
-                timerHandler.postDelayed(this, 1000);
+            if(computerTurn() && computer.getTurnScore() < 20)
+                timerHandler.postDelayed(this, 5000);
             else
                 cleanUp();
         }
@@ -45,18 +46,21 @@ public class MainActivity extends AppCompatActivity {
         user = new Player(0, 0);
         computer = new Player(0, 0);
 
-        diceImage = (ImageView) findViewById(R.id.diceImage1);
+
+        diceImage1 = (ImageView) findViewById(R.id.diceImage1);
+        diceImage2 = (ImageView) findViewById(R.id.diceImage2);
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
 
         rollButton = (Button) findViewById(R.id.rollButton);
         rollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int diceValue = rollDice();
-                user.updateTurnScoreWithDiceValue(diceValue);
+                int diceValue1 = rollDice(diceImage1);
+                int diceValue2 = rollDice(diceImage2);
+                user.updateTurnScoreWithDiceValue(diceValue1, diceValue2);
 
                 printScore("user");
-                if (diceValue == 1)
+                if (diceValue1 == 1 || diceValue2 == 1)
                     timerHandler.postDelayed(timerRunnable, 1000);
             }
         });
@@ -87,17 +91,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private int computerTurn() {
+    private boolean computerTurn() {
         rollButton.setEnabled(false);
         holdButton.setEnabled(false);
 
-        int diceValue;
+
         //do{
-            diceValue = rollDice() ;
-            computer.updateTurnScoreWithDiceValue(diceValue);
-            printScore("computer");
+        int diceValue1 = rollDice(diceImage1);
+        int diceValue2 = rollDice(diceImage2);
+        computer.updateTurnScoreWithDiceValue(diceValue1, diceValue2);
+        printScore("computer");
         //} while(computer.getTurnScore() < 20 && diceValue != 1);
-            return diceValue;
+        return (diceValue1 != 1 && diceValue2 != 1);
     }
 
     private void printScore(String turnId) {
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         holdButton.setEnabled(true);
     }
 
-    private int rollDice() {
+    private int rollDice(ImageView diceImage) {
         Random rand = new Random();
         int diceValue = rand.nextInt(6) + 1;
 

@@ -30,11 +30,19 @@ public class Player {
         this.turnScore = turnScore;
     }
 
-    public void updateTurnScoreWithDiceValue(int diceVal) {
-        if(diceVal != 1) {
-            turnScore += diceVal;
-        } else {
+    public void updateTurnScoreWithDiceValue(int diceVal1, int diceVal2) {
+        if(diceVal1 != 1 && diceVal2 != 1) {
+            turnScore += diceVal1 + diceVal2;
+        } else{
             turnScore = 0;
+        }
+
+        if(diceVal1 == diceVal2) {
+            if(diceVal1 == 1) {
+                overallScore = 0;
+            } else {
+                overallScore = overallScore + overallScore + turnScore;
+            }
         }
     }
 
