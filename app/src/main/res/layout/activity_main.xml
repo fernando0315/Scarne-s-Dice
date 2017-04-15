@@ -15,6 +15,7 @@
         tools:layout_editor_absoluteX="8dp">
 
         <TextView
+            android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your score: 0 Computer Score: 0"/>
@@ -44,19 +45,19 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/RollButton"
+                android:id="@+id/rollButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Roll"/>
 
             <Button
-                android:id="@+id/HoldButton"
+                android:id="@+id/holdButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hold"/>
 
             <Button
-                android:id="@+id/ResetButton"
+                android:id="@+id/resetButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reset"/>
