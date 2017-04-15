@@ -91,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /*********************************************************
+     * This method is called when it is computer's turn. It
+     * will disable some of the buttons and roll dice
+     * automatically for the computer
+     * @return false - if next turn is not needed
+     *         true - if next turn is needed
+     */
     private boolean computerTurn() {
         rollButton.setEnabled(false);
         holdButton.setEnabled(false);
@@ -103,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
         return ((diceValue1 != 1 && diceValue2 != 1) && (diceValue1 != diceValue2));
     }
 
+    /*********************************************************
+     * This is the method to print the score label view
+     * @param turnId - whose turn is it now
+     */
     private void printScore(String turnId) {
         scoreTextView.setText("Your score:" + user.getOverallScore() +
                 " computer score: " + computer.getOverallScore() +
@@ -110,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 (turnId.equals("user") ? user.getTurnScore() : computer.getTurnScore()));
     }
 
+    /*********************************************************
+     * This method is use to prepare the UI for the user turn
+     */
     private void cleanUp() {
         computer.updateOverallScore();
         computer.setTurnScore(0);
@@ -118,6 +132,13 @@ public class MainActivity extends AppCompatActivity {
         holdButton.setEnabled(true);
     }
 
+
+    /**********************************************************
+     * This function will roll dice randomly and post to the
+     * input param imageview and return the random value.
+     * @param diceImage
+     * @return random dice value
+     */
     private int rollDice(ImageView diceImage) {
         Random rand = new Random();
         int diceValue = rand.nextInt(6) + 1;
