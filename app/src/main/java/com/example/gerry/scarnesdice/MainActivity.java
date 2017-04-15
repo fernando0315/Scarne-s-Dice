@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 user.updateTurnScoreWithDiceValue(diceValue1, diceValue2);
 
                 printScore("user");
-                if (diceValue1 == 1 || diceValue2 == 1)
+                if ((diceValue1 == 1 || diceValue2 == 1) || diceValue1 == diceValue2)
                     timerHandler.postDelayed(timerRunnable, 1000);
             }
         });
@@ -95,14 +95,12 @@ public class MainActivity extends AppCompatActivity {
         rollButton.setEnabled(false);
         holdButton.setEnabled(false);
 
-
-        //do{
         int diceValue1 = rollDice(diceImage1);
         int diceValue2 = rollDice(diceImage2);
         computer.updateTurnScoreWithDiceValue(diceValue1, diceValue2);
         printScore("computer");
-        //} while(computer.getTurnScore() < 20 && diceValue != 1);
-        return (diceValue1 != 1 && diceValue2 != 1);
+
+        return ((diceValue1 != 1 && diceValue2 != 1) && (diceValue1 != diceValue2));
     }
 
     private void printScore(String turnId) {

@@ -43,6 +43,7 @@ public class Player {
             } else {
                 overallScore = overallScore + overallScore + turnScore;
             }
+            turnScore = 0;
         }
     }
 
