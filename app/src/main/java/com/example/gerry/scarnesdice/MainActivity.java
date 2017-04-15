@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gerry.scarnesdice.model.Player;
 
@@ -31,10 +32,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            if(computerTurn() && computer.getTurnScore() < 20)
-                timerHandler.postDelayed(this, 5000);
-            else
+            if(computerTurn() && computer.getTurnScore() < 20) {
+                timerHandler.postDelayed(this, 500);
+            } else if(computer.getOverallScore() > 99) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Computer win!!", Toast.LENGTH_SHORT);
+                toast.show();
+                resetGame();
+            }
+            else {
                 cleanUp();
+            }
         }
     };
 
@@ -60,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
                 user.updateTurnScoreWithDiceValue(diceValue1, diceValue2);
 
                 printScore("user");
+
+                if(user.getOverallScore()+user.getTurnScore() > 99) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User win!!", Toast.LENGTH_SHORT);
+                    toast.show();
+                    resetGame();
+                }
+
                 if ((diceValue1 == 1 || diceValue2 == 1) || diceValue1 == diceValue2)
                     timerHandler.postDelayed(timerRunnable, 1000);
             }
@@ -69,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
         holdButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.updateOverallScore();
-                user.setTurnScore(0);
-                printScore("computer");
-
                 timerHandler.postDelayed(timerRunnable, 1000);
             }
         });
@@ -82,13 +92,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 timerHandler.removeCallbacks(timerRunnable);
-                computer.setOverallScore(0);
-                computer.setTurnScore(0);
-                user.setOverallScore(0);
-                user.setTurnScore(0);
-                cleanUp();
+                resetGame();
             }
         });
+    }
+
+    /*********************************************************
+     * This function will reset the game
+     */
+    void resetGame() {
+        timerHandler.removeCallbacks(timerRunnable);
+        computer.setOverallScore(0);
+        computer.setTurnScore(0);
+        user.setOverallScore(0);
+        user.setTurnScore(0);
+        cleanUp();
     }
 
     /*********************************************************
@@ -99,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
      *         true - if next turn is needed
      */
     private boolean computerTurn() {
+        user.updateOverallScore();
+        user.setTurnScore(0);
+        printScore("computer");
         rollButton.setEnabled(false);
         holdButton.setEnabled(false);
 
